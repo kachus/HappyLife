@@ -5,7 +5,7 @@ from aiogram.types import Message, CallbackQuery
 from keyboards.callback_fabric import CommonBeliefsCallbackFactory, \
     ExistingBeliefsCallbackFactory
 from keyboards.inline_keyboards import create_start_practice_kb, \
-    crete_keyboard_chose_existing_belief_for_man
+    crete_keyboard_chose_existing_belief
 
 from aiogram import Bot, F, Router
 
@@ -17,10 +17,9 @@ async def process_chose_existed_belief(callback: CallbackQuery,
 
                                        bot: Bot,
                                        data_base):
-    keyboard = crete_keyboard_chose_existing_belief_for_man(user_telegram_id=callback.message.chat.id,
+    keyboard = crete_keyboard_chose_existing_belief(user_telegram_id=callback.message.chat.id,
                                                             data_base_controller=data_base)
 
-    print()
     await bot.edit_message_text(chat_id=callback.message.chat.id,
                                 message_id=callback.message.message_id,
                                 text=f"Выбери загон", reply_markup=keyboard)

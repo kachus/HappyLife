@@ -1,10 +1,15 @@
+from transformers.models import openai
+
+from lexicon.lexicon_ru import LEXICON_RU
+
+
 
 class GPTAPIrequest:
     model_3: str = "gpt-3.5-turbo"
     model_4: str = "gpt-4"
     model_3_16: str = "gpt-3.5-turbo-16k-0613"
 
-    def __init__(self, api_key, system_assistant_prompt, prompt, assistant:Assistant):
+    def __init__(self, api_key, system_assistant_prompt, prompt, assistant: Assistant):
         openai.api_key = api_key
         self.system_assistant = system_assistant_prompt
         self.prompt = prompt

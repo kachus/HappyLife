@@ -10,7 +10,7 @@ from aiogram.types import (
     CallbackQuery, FSInputFile
 )
 
-
+from ChatGPT import GPT
 from keyboards.callback_fabric import StartBeliefsFactory
 
 from BD.MongoDB.datat_enteties import Dialog, DialogMessage, PassingPeriod
@@ -27,9 +27,12 @@ from config_data.config import load_config
 from states.main_process import FSMQMainProcess
 from lexicon.lexicon_ru import LEXICON_RU
 from voice.match_key_file import get_file_path
-
+from ChatGPT.gpt_options import GPTOptions
+from ChatGPT.gpt_message import GPTMessage, GPTRole
+from models import SystemMessage, UserMessage, AssistantMessage
 router = Router()
 
+from ChatGPT import GPT
 
 @router.callback_query(StartBeliefsFactory.filter())
 async def start_practise(callback: CallbackQuery,
@@ -37,7 +40,17 @@ async def start_practise(callback: CallbackQuery,
                          callback_data: StartBeliefsFactory,
                          data_base,
                          state: FSMContext):
-    ...
+
+    await bot.send_message(chat_id=callback.message.chat.id,
+                           text='Начинаем!')
+
+    await GPT.complete(system_message=SystemMessage(content='Ты в роли психолога, а я твой клиент. проведи сеанс и говори дружелюбно'),
+                       messages=[
+                                AssistantMessage(content='Привет!'),
+                                UserMessage(id=0, content='Привет, меня зовут Женя') ],
+                       temperature=0.25)
+
+
 
 # получаем пол пользователя из базы данных
 # получаем загон пользователя

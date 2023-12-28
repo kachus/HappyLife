@@ -5,7 +5,7 @@ import vosk
 import json
 from pydub import AudioSegment
 current_dir = os.path.dirname(__file__)
-print()
+print(current_dir)
 model_path = os.path.normpath(os.path.join(current_dir, 'model', 'vosk-model-small-ru-0.22'))
 print()
 model = vosk.Model(model_path)

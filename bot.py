@@ -6,8 +6,8 @@ import logging
 
 from redis import Redis
 from container import data_base_controller, config, logger
-from hadnlers import command_handlers, deep_process_new, \
-    chose_existing_belief_handlers
+from hadnlers import command_handlers,\
+    chose_existing_belief_handlers, onboarding, main_process
 
 from aiogram.fsm.storage.redis import RedisStorage
 
@@ -31,11 +31,14 @@ async def main():
     bot: Bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
 
     dp = Dispatcher(data_base=data_base_controller,)
-
+    #
+    # dp.include_router(onboarding.router)
     dp.include_router(command_handlers.router)
-    dp.include_router(deep_process_new.router)
+    # dp.include_router(deep_process_new.router)
 
     dp.include_router(chose_existing_belief_handlers.router)
+    dp.include_router(main_process.router)
+
 
 
     try:
